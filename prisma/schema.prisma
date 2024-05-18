@@ -9,7 +9,48 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Job {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  title            String
+  type             String
+  description      String
+  salary           Int?
+  applicationEmail String?
+  applicationURL   String?
+  status           JobStatus @default(IN_PROGRESS)
+  companyId        String
+  company          Company   @relation(fields: [companyId], references: [id])
+  locationId       String
+  location         Location  @relation(fields: [locationId], references: [id])
+
+  @@map("jobs")
+}
+
+model Company {
+  id      String @id @default(cuid())
+  name    String
+  logoURL String
+  jobs    Job[]
+
+  @@map("companies")
+}
+
+model Location {
+  id   String @id @default(cuid())
+  name String
+  type String
+  jobs Job[]
+
+  @@map("locations")
+}
+
+enum JobStatus {
+  APPROVED
+  IN_PROGRESS
 }
