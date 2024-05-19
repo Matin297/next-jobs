@@ -18,11 +18,12 @@ model Job {
   id               String    @id @default(cuid())
   slug             String    @unique
   title            String
-  type             String
   description      String
   salary           Int?
   applicationEmail String?
   applicationURL   String?
+  type             JobType
+  style            JobStyle
   status           JobStatus @default(IN_PROGRESS)
   companyId        String
   company          Company   @relation(fields: [companyId], references: [id])
@@ -53,4 +54,16 @@ model Location {
 enum JobStatus {
   APPROVED
   IN_PROGRESS
+}
+
+enum JobType {
+  FULLTIME
+  PARTTIME
+  INTERNSHIP
+}
+
+enum JobStyle {
+  RMOTE
+  HYBRID
+  ON_SITE
 }
