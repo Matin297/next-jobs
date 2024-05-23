@@ -1,4 +1,5 @@
 import JobItem from "@/components/Jobs/JobItem";
+import FilterBox from "@/components/home/FilterBox";
 
 export default function Home() {
   return (
@@ -9,13 +10,18 @@ export default function Home() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit.
         </p>
       </div>
-      <ul className="space-y-3">
-        <JobItem />
-        <JobItem />
-        <JobItem />
-        <JobItem />
-        <JobItem />
-      </ul>
+      <section className="flex flex-col gap-5 md:flex-row">
+        <aside className="sticky top-2 h-fit rounded border bg-background p-4">
+          <FilterBox />
+        </aside>
+        <ul className="grow space-y-3">
+          <JobItem />
+          <JobItem />
+          <JobItem />
+          <JobItem />
+          <JobItem />
+        </ul>
+      </section>
     </section>
   );
 }
