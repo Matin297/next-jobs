@@ -18,7 +18,9 @@ export default async function FilterBox() {
           <Select id="location" name="location" defaultValue="">
             <option value="">All</option>
             {locations.map((location) => (
-              <option value={location.id}>{location.name}</option>
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
             ))}
             <option value="location1">Location1</option>
           </Select>
@@ -29,7 +31,7 @@ export default async function FilterBox() {
         <Select id="type" name="type" defaultValue="">
           <option value="">All</option>
           {Object.values(JobType).map((type) => (
-            <option className="capitalize" value={type}>
+            <option key={type} className="capitalize" value={type}>
               {type}
             </option>
           ))}
@@ -40,7 +42,7 @@ export default async function FilterBox() {
         <Select id="style" name="style" defaultValue="">
           <option value="">All</option>
           {Object.values(JobStyle).map((style) => (
-            <option className="capitalize" value={style}>
+            <option key={style} className="capitalize" value={style}>
               {style}
             </option>
           ))}
