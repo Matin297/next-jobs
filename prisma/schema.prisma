@@ -56,8 +56,8 @@ enum JobStatus {
 }
 
 enum JobType {
-  FULLTIME
-  PARTTIME
+  FULL_TIME
+  PART_TIME
   INTERNSHIP
 }
 
