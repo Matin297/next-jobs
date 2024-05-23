@@ -45,7 +45,6 @@ model Company {
 model Location {
   id   String @id @default(cuid())
   name String
-  type String
   jobs Job[]
 
   @@map("locations")
@@ -63,7 +62,7 @@ enum JobType {
 }
 
 enum JobStyle {
-  RMOTE
+  REMOTE
   HYBRID
   ON_SITE
 }
