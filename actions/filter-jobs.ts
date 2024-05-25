@@ -12,14 +12,11 @@ const FilterJobsSchema = z.object({
 });
 
 export async function filterJobs(formData: FormData) {
-  const values = Array.from(formData.entries()).filter(([_, value]) => value);
-  const validationResult = FilterJobsSchema.safeParse(
-    Object.fromEntries(values),
-  );
+  const searchParams = new URLSearchParams({});
 
-  if (validationResult.success) {
-    const data = validationResult.data;
-    const searchParams = new URLSearchParams({});
+  try {
+    const values = Array.from(formData.entries()).filter(([_, value]) => value);
+    const data = FilterJobsSchema.parse(Object.fromEntries(values));
 
     for (let [key, value] of Object.entries(data)) {
       if (value) {
@@ -28,7 +25,10 @@ export async function filterJobs(formData: FormData) {
         searchParams.delete(key);
       }
     }
-
-    redirect(`/?${searchParams.toString()}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Validation Error: Job filters are invalid!");
   }
+
+  redirect(`/?${searchParams.toString()}`);
 }
