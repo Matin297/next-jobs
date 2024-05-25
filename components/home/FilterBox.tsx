@@ -1,3 +1,4 @@
+import { filterJobs } from "@/actions";
 import { fetchLocations } from "@/lib/data";
 import { JobType, JobStyle } from "@prisma/client";
 import { Label, Input, Button, Select } from "@/components/ui";
@@ -6,7 +7,7 @@ export default async function FilterBox() {
   const locations = await fetchLocations();
 
   return (
-    <form className="flex flex-col gap-3">
+    <form action={filterJobs} className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">Filters</h2>
       <div className="space-y-1">
         <Label htmlFor="query">Search</Label>
