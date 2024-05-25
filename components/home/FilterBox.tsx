@@ -1,7 +1,8 @@
-import { filterJobs, JobsFilterOptionsType } from "@/actions";
 import { fetchLocations } from "@/lib/data";
 import { JobType, JobStyle } from "@prisma/client";
+import { filterJobs, JobsFilterOptionsType } from "@/actions";
 import { Label, Input, Button, Select } from "@/components/ui";
+import FormSubmitButton from "@/components/common/FormSubmitButton";
 
 interface FilterBoxProps {
   defaultValues: JobsFilterOptionsType;
@@ -59,7 +60,7 @@ export default async function FilterBox({ defaultValues }: FilterBoxProps) {
           ))}
         </Select>
       </div>
-      <Button type="submit">Apply</Button>
+      <FormSubmitButton>Apply</FormSubmitButton>
     </form>
   );
 }
