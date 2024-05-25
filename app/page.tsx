@@ -1,7 +1,12 @@
+import { JobsFilterOptionsType } from "@/actions";
 import JobItem from "@/components/Jobs/JobItem";
 import FilterBox from "@/components/home/FilterBox";
 
-export default function Home() {
+interface HomeProps {
+  searchParams: JobsFilterOptionsType;
+}
+
+export default function Home({ searchParams }: HomeProps) {
   return (
     <section className="space-y-5">
       <div className="text-center">
@@ -12,7 +17,7 @@ export default function Home() {
       </div>
       <section className="flex flex-col gap-5 md:flex-row">
         <aside className="sticky top-2 h-fit rounded border bg-background p-4">
-          <FilterBox />
+          <FilterBox defaultValues={searchParams} />
         </aside>
         <ul className="grow space-y-3">
           <JobItem />

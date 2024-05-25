@@ -1,9 +1,14 @@
-import { filterJobs } from "@/actions";
+import { filterJobs, JobsFilterOptionsType } from "@/actions";
 import { fetchLocations } from "@/lib/data";
 import { JobType, JobStyle } from "@prisma/client";
 import { Label, Input, Button, Select } from "@/components/ui";
 
-export default async function FilterBox() {
+interface FilterBoxProps {
+  defaultValues: JobsFilterOptionsType;
+}
+
+export default async function FilterBox({ defaultValues }: FilterBoxProps) {
+  const { q = "", location = "", style = "", type = "" } = defaultValues;
   const locations = await fetchLocations();
 
   return (
@@ -11,12 +16,17 @@ export default async function FilterBox() {
       <h2 className="text-lg font-semibold">Filters</h2>
       <div className="space-y-1">
         <Label htmlFor="query">Search</Label>
-        <Input id="query" name="q" placeholder="Title, Company, etc." />
+        <Input
+          name="q"
+          id="query"
+          defaultValue={q}
+          placeholder="Title, Company, etc."
+        />
       </div>
       {locations.length > 0 && (
         <div className="space-y-1">
           <Label htmlFor="location">Location</Label>
-          <Select id="location" name="location" defaultValue="">
+          <Select id="location" name="location" defaultValue={location}>
             <option value="">All</option>
             {locations.map((location) => (
               <option key={location.id} value={location.id}>
@@ -29,7 +39,7 @@ export default async function FilterBox() {
       )}
       <div className="space-y-1">
         <Label htmlFor="type">Type</Label>
-        <Select id="type" name="type" defaultValue="">
+        <Select id="type" name="type" defaultValue={type}>
           <option value="">All</option>
           {Object.values(JobType).map((type) => (
             <option key={type} className="capitalize" value={type}>
@@ -40,7 +50,7 @@ export default async function FilterBox() {
       </div>
       <div className="space-y-1">
         <Label htmlFor="style">Style</Label>
-        <Select id="style" name="style" defaultValue="">
+        <Select id="style" name="style" defaultValue={style}>
           <option value="">All</option>
           {Object.values(JobStyle).map((style) => (
             <option key={style} className="capitalize" value={style}>
