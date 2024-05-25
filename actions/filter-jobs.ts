@@ -11,6 +11,8 @@ const FilterJobsSchema = z.object({
   style: z.nativeEnum(JobStyle).optional(),
 });
 
+export type JobsFilterOptionsType = z.infer<typeof FilterJobsSchema>;
+
 export async function filterJobs(formData: FormData) {
   const searchParams = new URLSearchParams({});
 
