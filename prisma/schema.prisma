@@ -30,23 +30,29 @@ model Job {
   company          Company   @relation(fields: [companyId], references: [id])
   locationId       String
   location         Location  @relation(fields: [locationId], references: [id])
+  updatedAt        DateTime  @updatedAt
+  createdAt        DateTime  @default(now())
 
   @@map("jobs")
 }
 
 model Company {
-  id      String @id @default(cuid())
-  name    String
-  logoURL String
-  jobs    Job[]
+  id        String   @id @default(cuid())
+  name      String
+  logoURL   String
+  jobs      Job[]
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 
   @@map("companies")
 }
 
 model Location {
-  id   String @id @default(cuid())
-  name String
-  jobs Job[]
+  id        String   @id @default(cuid())
+  name      String
+  jobs      Job[]
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 
   @@map("locations")
 }
