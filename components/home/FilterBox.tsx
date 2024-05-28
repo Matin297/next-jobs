@@ -1,7 +1,7 @@
 import { fetchLocations } from "@/lib/data";
 import { JobType, JobStyle } from "@prisma/client";
 import { filterJobs, JobsFilterOptionsType } from "@/actions";
-import { Label, Input, Button, Select } from "@/components/ui";
+import { Label, Input, Select } from "@/components/ui";
 import FormSubmitButton from "@/components/common/FormSubmitButton";
 
 interface FilterBoxProps {
