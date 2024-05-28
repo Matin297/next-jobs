@@ -1,4 +1,5 @@
 import db from "@/prisma/client";
+import { JobsFilterOptionsType } from "@/actions";
 
 export async function fetchLocations() {
   try {
@@ -7,5 +8,43 @@ export async function fetchLocations() {
   } catch (error) {
     console.error(error);
     throw new Error("Server Error: Failed to fetch locations!");
+  }
+}
+
+export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
+  const { location, q, type, style } = filterOptions;
+  try {
+    const jobs = await db.job.findMany({
+      where: {
+        status: "APPROVED",
+        ...(type && { type }),
+        ...(style && { style }),
+        ...(location && { location: { name: location } }),
+        ...(q && {
+          OR: [
+            { title: { search: q } },
+            { description: { search: q } },
+            { applicationURL: { search: q } },
+            { applicationEmail: { search: q } },
+            { company: { name: { search: q } } },
+            { location: { name: { search: q } } },
+          ],
+        }),
+      },
+      select: {
+        id: true,
+        type: true,
+        style: true,
+        title: true,
+        salary: true,
+        updatedAt: true,
+        location: { select: { name: true } },
+        company: { select: { logoURL: true, name: true } },
+      },
+    });
+    return jobs;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Server Error: Failed to fetch jobs!");
   }
 }
