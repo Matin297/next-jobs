@@ -7,8 +7,8 @@ import { JobStyle, JobType } from "@prisma/client";
 const FilterJobsSchema = z.object({
   q: z.string().optional(),
   location: z.string().optional(),
-  type: z.nativeEnum(JobType).optional(),
-  style: z.nativeEnum(JobStyle).optional(),
+  type: z.nativeEnum(JobType).optional().or(z.literal("")),
+  style: z.nativeEnum(JobStyle).optional().or(z.literal("")),
 });
 
 export type JobsFilterOptionsType = z.infer<typeof FilterJobsSchema>;
@@ -17,8 +17,7 @@ export async function filterJobs(formData: FormData) {
   const searchParams = new URLSearchParams({});
 
   try {
-    const values = Array.from(formData.entries()).filter(([_, value]) => value);
-    const data = FilterJobsSchema.parse(Object.fromEntries(values));
+    const data = FilterJobsSchema.parse(Object.fromEntries(formData.entries()));
 
     for (let [key, value] of Object.entries(data)) {
       if (value) {
