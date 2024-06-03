@@ -33,4 +33,4 @@ export const PostJobSchema = z
   })
   .and(ApplicationSchema);
 
-export type JobSchemaFields = z.infer<typeof PostJobSchema>;
+export type JobFieldsType = z.infer<typeof PostJobSchema>;
