@@ -13,7 +13,7 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui";
-import { JobType } from "@prisma/client";
+import { JobType, JobStyle } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
 
@@ -74,6 +74,28 @@ export default function CreateJobForm() {
                     Select an option
                   </option>
                   {Object.values(JobType).map((type) => (
+                    <option key={type} className="capitalize" value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="style"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Job Style</FormLabel>
+              <FormControl>
+                <Select {...field}>
+                  <option hidden value="">
+                    Select an option
+                  </option>
+                  {Object.values(JobStyle).map((type) => (
                     <option key={type} className="capitalize" value={type}>
                       {type}
                     </option>
