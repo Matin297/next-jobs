@@ -5,6 +5,7 @@ import {
   Form,
   Input,
   Button,
+  Textarea,
   FormItem,
   FormLabel,
   FormField,
@@ -38,6 +39,22 @@ export default function CreateJobForm() {
               <FormLabel>Job Title</FormLabel>
               <FormControl>
                 <Input placeholder="e.g. Lorem Ipsum" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Job Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="e.g. Lorem ipsum dolor sit..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
