@@ -11,6 +11,16 @@ export async function fetchLocations() {
   }
 }
 
+export async function fetchCompanies() {
+  try {
+    const companies = await db.company.findMany();
+    return companies;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Server Error: Failed to fetch companies!");
+  }
+}
+
 export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
   const { location, q, type, style } = filterOptions;
   try {
