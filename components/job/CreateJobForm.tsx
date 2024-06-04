@@ -16,8 +16,17 @@ import {
 import { JobType, JobStyle } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
+import { Company, Location } from "@prisma/client";
 
-export default function CreateJobForm() {
+interface CreateJobFormProps {
+  companies: Company[];
+  locations: Location[];
+}
+
+export default function CreateJobForm({
+  companies,
+  locations,
+}: CreateJobFormProps) {
   const form = useForm<JobFieldsType>({
     resolver: zodResolver(PostJobSchema),
   });
@@ -106,6 +115,51 @@ export default function CreateJobForm() {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="companyId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company</FormLabel>
+              <FormControl>
+                <Select {...field}>
+                  <option hidden value="">
+                    Select an option
+                  </option>
+                  {companies.map(({ name, id }) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="locationId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <FormControl>
+                <Select {...field}>
+                  <option hidden value="">
+                    Select an option
+                  </option>
+                  {locations.map(({ name, id }) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button>Submit</Button>
       </form>
     </Form>
