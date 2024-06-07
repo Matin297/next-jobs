@@ -29,7 +29,7 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
         status: "APPROVED",
         ...(type && { type }),
         ...(style && { style }),
-        ...(location && { location: { name: location } }),
+        ...(location && { location: { city: location } }),
         ...(q && {
           OR: [
             { title: { search: q } },
@@ -37,7 +37,7 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
             { applicationURL: { search: q } },
             { applicationEmail: { search: q } },
             { company: { name: { search: q } } },
-            { location: { name: { search: q } } },
+            { location: { city: { search: q }, country: { search: q } } },
           ],
         }),
       },
@@ -48,7 +48,7 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
         title: true,
         salary: true,
         updatedAt: true,
-        location: { select: { name: true } },
+        location: { select: { city: true, country: true } },
         company: { select: { logoURL: true, name: true } },
       },
     });

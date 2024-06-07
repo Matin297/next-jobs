@@ -31,7 +31,7 @@ export default async function FilterBox({ defaultValues }: FilterBoxProps) {
             <option value="">All</option>
             {locations.map((location) => (
               <option key={location.id} value={location.id}>
-                {location.name}
+                {location.city}
               </option>
             ))}
             <option value="location1">Location1</option>
