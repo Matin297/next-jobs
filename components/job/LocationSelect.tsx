@@ -43,7 +43,7 @@ export default function LocationSelect({
           aria-expanded={open}
           variant="outline"
           role="combobox"
-          className={cn("item-center flex justify-between pr-0", {
+          className={cn("flex items-center justify-between pr-0", {
             "text-muted-foreground": !value,
           })}
         >
