@@ -13,11 +13,11 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui";
-import { JobType, JobStyle } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
-import { Company, Location } from "@prisma/client";
+import { JobType, JobStyle, Company, Location } from "@prisma/client";
 
+import CompanySelect from "./CompanySelect";
 import LocationSelect from "./LocationSelect";
 
 interface CreateJobFormProps {
@@ -119,28 +119,6 @@ export default function CreateJobForm({
         />
         <FormField
           control={form.control}
-          name="companyId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Company</FormLabel>
-              <FormControl>
-                <Select {...field}>
-                  <option hidden value="">
-                    Select an option
-                  </option>
-                  {companies.map(({ name, id }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="locationId"
           render={({ field }) => (
             <FormItem className="flex flex-col">
@@ -148,6 +126,21 @@ export default function CreateJobForm({
               <LocationSelect
                 value={field.value}
                 locations={locations}
+                onChange={field.onChange}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="companyId"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Company</FormLabel>
+              <CompanySelect
+                value={field.value}
+                companies={companies}
                 onChange={field.onChange}
               />
               <FormMessage />
