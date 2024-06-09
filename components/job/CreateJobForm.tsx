@@ -17,8 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
 import { JobType, JobStyle, Company, Location } from "@prisma/client";
 
-import CompanySelect from "./CompanySelect";
-import LocationSelect from "./LocationSelect";
+import ComboSelect from "./ComboSelect";
 
 interface CreateJobFormProps {
   companies: Company[];
@@ -123,10 +122,13 @@ export default function CreateJobForm({
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Location</FormLabel>
-              <LocationSelect
+              <ComboSelect
+                data={locations}
                 value={field.value}
-                locations={locations}
                 onChange={field.onChange}
+                getDisplayValue={(location) =>
+                  location ? `${location?.city}, ${location?.country}` : ""
+                }
               />
               <FormMessage />
             </FormItem>
@@ -138,10 +140,11 @@ export default function CreateJobForm({
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Company</FormLabel>
-              <CompanySelect
+              <ComboSelect
+                data={companies}
                 value={field.value}
-                companies={companies}
                 onChange={field.onChange}
+                getDisplayValue={(company) => company?.name || ""}
               />
               <FormMessage />
             </FormItem>
