@@ -23,7 +23,7 @@ export default async function CreateJobPage() {
           <span>Back</span>
         </Link>
       </Button>
-      <h1 className="mb-5 text-center text-2xl font-bold">
+      <h1 className="mb-5 text-center text-2xl font-bold tracking-tighter">
         Job Post Information
       </h1>
       <CreateJobForm companies={companies} locations={locations} />
