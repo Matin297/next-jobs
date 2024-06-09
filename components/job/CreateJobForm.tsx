@@ -150,6 +150,46 @@ export default function CreateJobForm({
             </FormItem>
           )}
         />
+        <div className="flex flex-col gap-5 sm:flex-row sm:gap-2">
+          <FormField
+            control={form.control}
+            name="applicationEmail"
+            render={({ field }) => (
+              <FormItem className="grow sm:max-w-[50%]">
+                <FormLabel>Application Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="example@example.com"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="applicationURL"
+            render={({ field }) => (
+              <FormItem className="grow sm:max-w-[50%]">
+                <FormLabel>Application URL</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="url"
+                    placeholder="http://example.com"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      form.trigger("applicationEmail");
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Button>Submit</Button>
       </form>
