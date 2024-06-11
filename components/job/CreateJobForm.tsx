@@ -6,13 +6,14 @@ import {
   Input,
   Button,
   Select,
-  Textarea,
   FormItem,
   FormLabel,
   FormField,
   FormMessage,
   FormControl,
 } from "@/components/ui";
+import Editor from "@/components/common/Editor";
+import { draftToMarkdown } from "markdown-draft-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
 import { JobType, JobStyle, Company, Location } from "@prisma/client";
@@ -51,22 +52,6 @@ export default function CreateJobForm({
               <FormLabel>Job Title</FormLabel>
               <FormControl>
                 <Input placeholder="e.g. Lorem Ipsum" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="e.g. Lorem ipsum dolor sit..."
-                  {...field}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -190,6 +175,22 @@ export default function CreateJobForm({
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Job Description</FormLabel>
+              <FormControl>
+                <Editor
+                  ref={field.ref}
+                  onChange={(d) => field.onChange(draftToMarkdown(d))}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button>Submit</Button>
       </form>
