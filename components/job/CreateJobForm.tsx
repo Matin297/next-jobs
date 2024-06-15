@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   Input,
-  Button,
   Select,
   FormItem,
   FormLabel,
@@ -16,6 +15,7 @@ import Editor from "@/components/common/Editor";
 import { draftToMarkdown } from "markdown-draft-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostJobSchema, JobFieldsType } from "@/actions";
+import LoadingButton from "@/components/common/LoadingButton";
 import { JobType, JobStyle, Company, Location } from "@prisma/client";
 
 import ComboSelect from "./ComboSelect";
@@ -206,7 +206,9 @@ export default function CreateJobForm({
           )}
         />
 
-        <Button>Submit</Button>
+        <LoadingButton type="submit" loading={form.formState.isSubmitting}>
+          Submit
+        </LoadingButton>
       </form>
     </Form>
   );
