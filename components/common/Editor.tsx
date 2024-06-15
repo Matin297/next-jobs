@@ -1,7 +1,20 @@
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
-import { Editor as DraftEditor, EditorProps } from "react-draft-wysiwyg";
+import dynamic from "next/dynamic";
+import { EditorProps } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+const DraftEditor = dynamic(
+  () => import("react-draft-wysiwyg").then((result) => result.Editor),
+  {
+    ssr: false,
+    loading: () => (
+      <p className="h-[200px] text-sm text-muted-foreground">
+        Loading editor...
+      </p>
+    ),
+  },
+);
 
 export default forwardRef<Object, EditorProps>(function Editor(
   { toolbarClassName, editorClassName, ...props },
