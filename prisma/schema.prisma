@@ -39,7 +39,7 @@ model Job {
 model Company {
   id        String   @id @default(cuid())
   name      String   @db.VarChar(100)
-  logoURL   String
+  logoURL   String?
   jobs      Job[]
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
