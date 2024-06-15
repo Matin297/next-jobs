@@ -192,6 +192,20 @@ export default function CreateJobForm({
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="salary"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Salary</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="e.g. 100,000" type="number" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button>Submit</Button>
       </form>
     </Form>
