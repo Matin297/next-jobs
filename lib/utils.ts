@@ -16,3 +16,10 @@ export function formatSalary(salary: number) {
 export function calcDateDistFromNow(date: Date) {
   return formatDistanceToNowStrict(date, { addSuffix: true });
 }
+
+export function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+}
