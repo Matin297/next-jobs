@@ -1,6 +1,5 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import {
   Form,
   Input,
@@ -11,10 +10,13 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui";
+import { createJob } from "@/actions";
+import { useForm } from "react-hook-form";
 import Editor from "@/components/common/Editor";
 import { draftToMarkdown } from "markdown-draft-js";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PostJobSchema, JobFieldsType } from "@/actions";
+import { PostJobSchema, JobFieldsType } from "@/lib/schema";
+
 import LoadingButton from "@/components/common/LoadingButton";
 import { JobType, JobStyle, Company, Location } from "@prisma/client";
 
@@ -33,8 +35,12 @@ export default function CreateJobForm({
     resolver: zodResolver(PostJobSchema),
   });
 
-  function handleSubmit(values: JobFieldsType) {
-    console.log(values);
+  async function handleSubmit(values: JobFieldsType) {
+    try {
+      await createJob(values);
+    } catch (error) {
+      alert("Something went wrong! Please check your input values.");
+    }
   }
 
   return (
