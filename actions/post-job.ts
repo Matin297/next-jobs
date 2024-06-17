@@ -1,36 +1,21 @@
-import { z } from "zod";
-import { JobStyle, JobType } from "@prisma/client";
+"use server";
 
-const ApplicationSchema = z
-  .object({
-    applicationURL: z.string().url().optional().or(z.literal("")),
-    applicationEmail: z.string().email().optional().or(z.literal("")),
-  })
-  .refine(
-    ({ applicationURL, applicationEmail }) =>
-      applicationURL || applicationEmail,
-    {
-      message:
-        "Please provide either an email or a URL for application submissions.",
-      path: ["applicationEmail"],
+import { nanoid } from "nanoid";
+import db from "@/prisma/client";
+import { redirect } from "next/navigation";
+import { generateSlug } from "@/lib/utils";
+import { JobFieldsType, PostJobSchema } from "@/lib/schema";
+
+export async function createJob(data: JobFieldsType) {
+  const validationResult = PostJobSchema.parse(data);
+
+  await db.job.create({
+    data: {
+      ...validationResult,
+      salary: parseInt(validationResult.salary || "0"),
+      slug: `${generateSlug(validationResult.title)}-${nanoid()}`,
     },
-  );
+  });
 
-export const PostJobSchema = z
-  .object({
-    type: z.nativeEnum(JobType),
-    companyId: z.string().min(1),
-    style: z.nativeEnum(JobStyle),
-    locationId: z.string().min(1),
-    title: z.string().min(1).max(100),
-    description: z.string().min(1).max(5000),
-    salary: z
-      .string()
-      .regex(/^\d+$/, "Must be a number.")
-      .max(9, "Cannot be longer than 9 digits.")
-      .optional()
-      .or(z.literal("")),
-  })
-  .and(ApplicationSchema);
-
-export type JobFieldsType = z.infer<typeof PostJobSchema>;
+  redirect("/job/success");
+}
