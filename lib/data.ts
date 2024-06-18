@@ -1,4 +1,5 @@
 import db from "@/prisma/client";
+import { cache } from "react";
 import { JobsFilterOptionsType } from "@/actions";
 
 export async function fetchLocations() {
@@ -62,7 +63,7 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
   }
 }
 
-export async function fetchJobBySlug(slug: string) {
+export const fetchJobBySlug = cache(async function (slug: string) {
   try {
     const job = await db.job.findUnique({
       where: {
@@ -89,4 +90,4 @@ export async function fetchJobBySlug(slug: string) {
     console.error(error);
     throw new Error("Server Error: Failed to fetch job details!");
   }
-}
+});
