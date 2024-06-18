@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 import { Button } from "@/components/ui";
 import { notFound } from "next/navigation";
 import { fetchJobBySlug } from "@/lib/data";
@@ -11,6 +12,19 @@ import { Briefcase, MapPin, Globe2, Banknote, Clock } from "lucide-react";
 interface JobDetailsPageProps {
   params: {
     slug: string;
+  };
+}
+
+export async function generateMetadata({
+  params: { slug },
+}: JobDetailsPageProps): Promise<Metadata> {
+  const job = await fetchJobBySlug(slug);
+
+  if (!job) {
+    return notFound();
+  }
+  return {
+    title: job.title,
   };
 }
 
