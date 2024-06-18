@@ -37,7 +37,7 @@ export default forwardRef<Object, EditorProps>(function Editor(
         editorClassName,
       )}
       toolbar={{
-        options: ["inline", "list", "link", "history"],
+        options: ["inline", "list", "link", "history", "blockType"],
         inline: {
           options: ["bold", "italic", "underline"],
         },
