@@ -46,6 +46,7 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
       select: {
         id: true,
         type: true,
+        slug: true,
         style: true,
         title: true,
         salary: true,
@@ -58,5 +59,34 @@ export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
   } catch (error) {
     console.error(error);
     throw new Error("Server Error: Failed to fetch jobs!");
+  }
+}
+
+export async function fetchJobBySlug(slug: string) {
+  try {
+    const job = await db.job.findUnique({
+      where: {
+        slug,
+        status: "APPROVED",
+      },
+      include: {
+        company: {
+          select: {
+            name: true,
+            logoURL: true,
+          },
+        },
+        location: {
+          select: {
+            city: true,
+            country: true,
+          },
+        },
+      },
+    });
+    return job;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Server Error: Failed to fetch job details!");
   }
 }
