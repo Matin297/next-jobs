@@ -31,10 +31,9 @@ export default async function FilterBox({ defaultValues }: FilterBoxProps) {
             <option value="">All</option>
             {locations.map((location) => (
               <option key={location.id} value={location.id}>
-                {location.city}
+                {`${location.city}, ${location.country}`}
               </option>
             ))}
-            <option value="location1">Location1</option>
           </Select>
         </div>
       )}
