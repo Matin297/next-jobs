@@ -21,6 +21,8 @@ export async function fetchCompanies() {
   }
 }
 
+export type CustomJobType = Awaited<ReturnType<typeof fetchJobs>>[number];
+
 export async function fetchJobs(filterOptions: JobsFilterOptionsType = {}) {
   const { location, q, type, style } = filterOptions;
   try {
