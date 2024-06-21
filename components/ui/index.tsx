@@ -7,3 +7,4 @@ export * from "./select";
 export * from "./popover";
 export * from "./command";
 export * from "./textarea";
+export * from "./pagination";
