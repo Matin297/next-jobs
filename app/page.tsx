@@ -19,7 +19,7 @@ export default function Home({ searchParams }: HomeProps) {
         <aside className="sticky top-2 h-fit rounded border bg-background p-4">
           <FilterBox defaultValues={searchParams} />
         </aside>
-        <section className="grow">
+        <section className="grow space-y-2">
           <JobList filterOptions={searchParams} />
         </section>
       </section>

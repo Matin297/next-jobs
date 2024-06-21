@@ -1,21 +1,28 @@
 import JobItem from "./JobItem";
-import { fetchJobs } from "@/lib/data";
 import { JobsFilterOptionsType } from "@/actions";
+import CustomPagination from "@/components/common/Pagination";
+import { fetchJobs, countTotalFilteredJobsPages } from "@/lib/data";
 
 interface JobsListProps {
   filterOptions: JobsFilterOptionsType;
 }
 
 export default async function JobsList({ filterOptions }: JobsListProps) {
-  const jobs = await fetchJobs(filterOptions);
+  const [jobs, totalPages] = await Promise.all([
+    fetchJobs(filterOptions),
+    countTotalFilteredJobsPages(filterOptions),
+  ]);
 
-  if (jobs.length > 0) {
+  if (totalPages > 1) {
     return (
-      <ul className="space-y-3">
-        {jobs.map((job) => (
-          <JobItem key={job.id} {...job} />
-        ))}
-      </ul>
+      <>
+        <ul className="space-y-3">
+          {jobs.map((job) => (
+            <JobItem key={job.id} {...job} />
+          ))}
+        </ul>
+        <CustomPagination pages={totalPages} />
+      </>
     );
   }
 
